@@ -101,3 +101,28 @@
 @media (min-width: 992px) {
   #main-footer .nav-link span { display: block; }
 }
+/*comprar tickets*/
+
+.propia{
+    display:block;
+}
+.none{
+    display:none;
+}
+.body{
+  display:grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+  grid-template-areas: "header"
+                      "main"
+                      "footer";
+}
+.body header{
+  grid-area: header;
+}
+.body main{
+  grid-area: main;
+}
+.body footer{
+  grid-area: footer;
+}

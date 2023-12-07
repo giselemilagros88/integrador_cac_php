@@ -1,9 +1,11 @@
 <?php ob_start(); #esto evita los errores de envios de headers
     set_error_handler("var_dump");
     include 'conexion.php';
+    session_start();
 ?>
 
 <?php
+# cuando alguien quiere grabar un orador se envian los datos a esta pagina, entonces hay envio post
     if ($_POST) {
         # Validación de campos obligatorios
         $errores = [];
@@ -35,6 +37,7 @@
             $imagen = $_FILES['archivo']['name'];
             $imagen_temporal = $_FILES['archivo']['tmp_name'];
             $fecha = new DateTime();
+            #hago que la imagen sea uno e irrepetible
             $imagen = $fecha->getTimestamp() . "_" . $imagen;
             move_uploaded_file($imagen_temporal, "../assets/upload/" . $imagen);
 
@@ -45,8 +48,13 @@
             $sql="INSERT INTO `oradores` (`id_orador`, `nombre`, `apellido`, `mail`, `tema`,`imagen`) VALUES (NULL, '$nombre' , '$apellido','$email','$tema','$imagen')";
             $id_orador = $conexion->ejecutar($sql);
             # Redireccionar para evitar reenvíos del formulario
-            header("Location: ../pages/listado.php");
-            exit;
+            if (isset( $_SESSION['usuario'])=='Admin') {
+                header("Location: ../pages/listado_admin.php");
+            }else{
+                header("Location: ../index.php");
+            }
+           
+            exit; #die();
         } else {
             # Manejar los errores, por ejemplo, mostrarlos en el formulario
             foreach ($errores as $campo => $mensaje) {

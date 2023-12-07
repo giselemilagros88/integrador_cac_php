@@ -1,6 +1,8 @@
 <?php
-
+    #defino una constante con la url base , cuando suban a 000webhost es otra la url, para armar rutas relativas
     define('BASE_URL', 'http://localhost/trabajo_integrador_cac/');
+   # define('BASE_URL', 'https://crudgisephp.000webhostapp.com/');
+   #si no hay iniciada ninguna session, entonces la iniciamos
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
@@ -53,9 +55,18 @@
                         </li>
                        
                         <?php 
+                        #si existe un inicio de sesion, me muestra quien esta logueado
                         if (isset($_SESSION['usuario'])) {
                             // Usuario logueado: mostrar opción para cerrar sesión
-                        ?>
+                        ?>  <!-- 
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <?php #echo $_SESSION['usuario']; ?>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                  <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+                                </ul>
+                             </li>-->
                             <li class="nav-item">
                                 <a class="nav-link active" href="<?php echo BASE_URL; ?>includes/cerrar.php">Cerrar Sesión de: <span><?php echo $_SESSION['usuario']; ?></span></a> 
                             </li>
